@@ -21,15 +21,13 @@ There are a few reasons you might want to run Prefect using Docker Compose:
 
 Start by cloning this repository.
 
-The `docker-compose.yml` contains four services:
+The `docker-compose.yml` file contains four services:
 * `database` - Postgres database for the Orion API
 * `orion` - Prefect Orion API and UI
 * `agent` - Prefect Orion Agent
 * `cli` - A container that mounts this repository's `flows` directory and offers an ideal environment for building and applying deployments and running flows. 
 
-## Running locally
-
-### Prefect Orion
+## Prefect Orion
 To try Prefect locally, open a terminal, navigate to the directory where you cloned this repository, and run:
 
 ```
@@ -44,7 +42,7 @@ orion_1     | INFO:     Uvicorn running on http://0.0.0.0:4200 (Press CTRL+C to 
 
 The Orion API container shares port 4200 with the host machine, so if you open a web browser and navigate to `http://localhost:4200` you will see the Prefect Orion UI.
 
-### Prefect CLI
+## Prefect CLI
 
 Next, open another terminal in the same directory and run:
 
@@ -73,7 +71,7 @@ If you'd like to use the CLI container to interact with Prefect Cloud instead of
 - PREFECT_API_KEY=${PREFECT_API_KEY}
 ```
 
-### Prefect Agent
+## Prefect Agent
 
 You can run a Prefect Agent by updating `docker-compose.yml` and changing `YOUR_WORK_QUEUE_NAME` to match the name of the Prefect work queue you would like to connect to, and then running the following command:
 
