@@ -1,4 +1,4 @@
-# Prefect with Docker Compose
+# Prefect 2 with Docker Compose
 
 This repository contains everything you need to run Prefect Orion, a Prefect agent, or the Prefect CLI using Docker Compose. 
 
