@@ -47,7 +47,7 @@ services:
       - "./flows:/root/flows"
     environment:
       - PREFECT_API_URL=http://orion:4200/api
-#      Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
+#       Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["cli"]
       
