@@ -5,7 +5,7 @@ This repository contains everything you need to run Prefect Orion, a Prefect age
 # Why Docker Compose?
 
 There are a few reasons you might want to run Prefect using Docker Compose:
-* You want to try Prefect without installing anything new on yourk workstation. 
+* You want to try Prefect without installing anything new on your workstation. 
 * You are comfortable with Docker and prefer it over virtual environments or Anaconda. 
 * You want to run Prefect on a system like CentOS 7 where installing Prefect dependencies is difficult.
 
