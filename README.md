@@ -50,7 +50,7 @@ Next, open another terminal in the same directory and run:
 docker-compose run cli
 ```
 
-This runs an interactive Bash session in a container that shares a Docker network with the Orion server you just started. If you run `ls`, you will see that the container shares the `flows` subdirectory of the repository:
+This runs an interactive Bash session in a container that shares a Docker network with the Orion server you just started. If you run `ls`, you will see that the container shares the `flows` subdirectory of the repository on the host machine:
 
 ```
 flow.py
