@@ -1,6 +1,7 @@
 version: "3.9"
 services:
 
+  ### Prefect Database
   database:
     image: postgres:14.1-alpine
     restart: always
@@ -13,7 +14,19 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
     profiles: ["orion"]
+  
+  ### MinIO for flow storage
+  minio:
+    image: minio/minio:latest
+    entrypoint: ["minio", "server", "--address", "0.0.0.0:9000", "--console-address", "0.0.0.0:9001", "/data"]
+    volumes:
+      - "minio:/data"
+    ports:
+      - 9000:9000
+      - 9001:9001
+    profiles: ["minio"]
 
+  ### Prefect Orion API
   orion:
     image: prefecthq/prefect:2.3.0-python3.10
     restart: always
@@ -29,6 +42,7 @@ services:
       - database
     profiles: ["orion"]
 
+  ## Prefect Agent
   agent:
     image: prefecthq/prefect:2.3.0-python3.10
     restart: always
@@ -39,6 +53,7 @@ services:
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["agent"]
 
+  ### Prefect CLI
   cli:
     image: prefecthq/prefect:2.3.0-python3.10
     entrypoint: "bash"
