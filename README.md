@@ -102,3 +102,4 @@ agent_two:
       - PREFECT_API_URL=http://orion:4200/api
     profiles: ["agent"]
 ```
+Now, when you run `docker-compose --profile agent up`, both agents will start, connect to the Orion API, and begin polling their work queues.
