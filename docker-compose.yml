@@ -24,7 +24,7 @@ services:
     profiles: ["minio"]
 
   orion:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -39,7 +39,7 @@ services:
     profiles: ["orion"]
 
   agent:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -49,14 +49,14 @@ services:
     profiles: ["agent"]
 
   cli:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
       - "./flows:/root/flows"
     environment:
       - PREFECT_API_URL=http://orion:4200/api
-#      Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
+#       Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["cli"]
       
