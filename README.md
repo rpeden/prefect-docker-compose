@@ -83,5 +83,22 @@ This will run a Prefect agent and connect to the work queue you provided.
 
 As with the CLI, you can also use Docker Compose to run an agent that connects to Prefect Cloud by updating the agent's `PREFECT_API_URL` and `PREFECT_API_KEY` settings in `docker-compose.yml`.
 
+## Next Steps
 
+You're not limited to running one profile at a time. For example, if you have created a deployment and want to start and agent for it, but don't want to open two separate terminals to run Orion and an agent, you can start them both at once by running: 
 
+```
+docker compose --profile orion --profile agent up
+```
+
+And if you want to start two separate agents that pull from different work queues? No problem! Just duplicate the agent service, give it a different name, and set its work queue name. For example:
+
+```
+agent_two:
+    image: prefecthq/prefect:2.3.0-python3.10
+    restart: always
+    entrypoint: ["prefect", "agent", "start", "-q", "YOUR_OTHER_WORK_QUEUE_NAME"]
+    environment:
+      - PREFECT_API_URL=http://orion:4200/api
+    profiles: ["agent"]
+```
