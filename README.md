@@ -1,10 +1,12 @@
 # Prefect 2 with Docker Compose
 
-This repository contains everything you need to run Prefect Orion, a Prefect agent, or the Prefect CLI using Docker Compose. 
+This repository contains everything you need to run Prefect Orion, a Prefect agent, or the Prefect CLI using Docker Compose.
+
+Thanks to Paco Ibañez for his excellent work in this repository, which helped me get started: [https://github.com/fraibacas/prefect-orion](https://github.com/fraibacas/prefect-orion)! I don't intend to replace his work. Instead, my repository uses Docker Compose to help you experiment with Prefect 2 locally and explore the different pieces you may need to run in a production environment.
 
 # Why Docker Compose?
 
-There are a few reasons you might want to run Prefect using Docker Compose:
+There are a few reasons you might want to run Prefect using Docker or Docker Compose:
 * You want to try Prefect without installing anything new on your workstation. 
 * You are comfortable with Docker and prefer it over virtual environments or Anaconda. 
 * You want to run Prefect on a system like CentOS 7 where installing Prefect dependencies is difficult.
