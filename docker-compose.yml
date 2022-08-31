@@ -15,7 +15,7 @@ services:
     profiles: ["orion"]
 
   orion:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -30,7 +30,7 @@ services:
     profiles: ["orion"]
 
   agent:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -40,7 +40,7 @@ services:
     profiles: ["agent"]
 
   cli:
-    image: prefecthq/prefect:2.2.0-python3.10
+    image: prefecthq/prefect:2.3.0-python3.10
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
