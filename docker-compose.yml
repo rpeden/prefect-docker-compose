@@ -13,6 +13,15 @@ services:
     volumes: 
       - db:/var/lib/postgresql/data
     profiles: ["orion"]
+  
+  minio:
+    image: minio/minio:latest
+    volumes:
+      - "minio:/data"
+    expose:
+      - 9000
+      - 9001
+    profiles: ["minio"]
 
   orion:
     image: prefecthq/prefect:2.2.0-python3.10
@@ -54,6 +63,7 @@ services:
 volumes:
   prefect:
   db:
+  minio:
 networks:
   default:
     name: prefect-network
