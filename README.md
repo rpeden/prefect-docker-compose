@@ -31,7 +31,7 @@ The `docker-compose.yml` file contains five services:
 * `cli` - A container that mounts this repository's `flows` directory and offers an ideal environment for building and applying deployments and running flows. 
 
 ## Prefect Orion
-To try Prefect locally, open a terminal, navigate to the directory where you cloned this repository, and run:
+To run the Prefect Orion API and UI, open a terminal, navigate to the directory where you cloned this repository, and run:
 
 ```
 docker-compose --profile orion up
