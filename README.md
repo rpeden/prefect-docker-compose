@@ -17,7 +17,7 @@ There are a few reasons you might want to run Prefect using Docker Compose:
 
 # Limitations
 
-* If you run a Prefect agent in Docker, it will not be able to run `DockerContainer` deployments because Docker-in-Docker is not supported. 
+* If you run a Prefect agent in Docker, it will not be able to run `DockerContainer` deployments unless you share the host's Docker socket with the agent container because Docker-in-Docker is not supported. 
 
 # Getting Started
 
