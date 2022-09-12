@@ -28,7 +28,7 @@ services:
 
   ### Prefect Orion API
   orion:
-    image: prefecthq/prefect:2.3.1-python3.10
+    image: prefecthq/prefect:2.3.2-python3.10
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -44,7 +44,7 @@ services:
 
   ## Prefect Agent
   agent:
-    image: prefecthq/prefect:2.3.1-python3.10
+    image: prefecthq/prefect:2.3.2-python3.10
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -55,7 +55,7 @@ services:
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.3.1-python3.10
+    image: prefecthq/prefect:2.3.2-python3.10
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
