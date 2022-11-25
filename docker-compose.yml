@@ -3,7 +3,7 @@ services:
 
   ### Prefect Database
   database:
-    image: postgres:14.1-alpine
+    image: postgres:15.1-alpine
     restart: always
     environment:
       - POSTGRES_USER=postgres
