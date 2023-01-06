@@ -34,6 +34,9 @@ services:
       - prefect:/root/.prefect
     entrypoint: ["prefect", "orion", "start"]
     environment:
+      # If you want Orion to access Orion from anywhere other than the Docker host machine, you will need to change
+      # PREFECT_API_URL to match the hostname/IP used to load the Orion UI in your web browser.
+      - PREFECT_API_URL=http://orion:4200/api
       - PREFECT_ORION_API_HOST=0.0.0.0
       - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/orion
     ports:
