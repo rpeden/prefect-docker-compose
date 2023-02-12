@@ -35,8 +35,8 @@ services:
     entrypoint: ["prefect", "orion", "start"]
     environment:
       # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
-      # PREFECT_API_URL to match the external hostname/IP used to load the  UI in your web browser.
-      - PREFECT_API_URL=http://server:4200/api
+      # PREFECT_UI_URL to match the external hostname/IP used to load the  UI in your web browser.
+      - PREFECT_UI_URL=http://127.0.0.0:4200/api
       - PREFECT_ORION_API_HOST=0.0.0.0
       - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/prefect
     ports:
