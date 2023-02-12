@@ -3,7 +3,7 @@ services:
 
   ### Prefect Database
   database:
-    image: postgres:15.1-alpine
+    image: postgres:15.2-alpine
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -28,14 +28,14 @@ services:
 
   ### Prefect Orion API
   orion:
-    image: prefecthq/prefect:2.7.7-python3.11
+    image: prefecthq/prefect:2.8.0-python3.11
     restart: always
     volumes:
       - prefect:/root/.prefect
     entrypoint: ["prefect", "orion", "start"]
     environment:
-      # If you want Orion to access Orion from anywhere other than the Docker host machine, you will need to change
-      # PREFECT_API_URL to match the hostname/IP used to load the Orion UI in your web browser.
+      # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
+      # PREFECT_API_URL to match the external hostname/IP used to load the Orion UI in your web browser.
       - PREFECT_API_URL=http://orion:4200/api
       - PREFECT_ORION_API_HOST=0.0.0.0
       - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/orion
@@ -47,7 +47,7 @@ services:
 
   ## Prefect Agent
   agent:
-    image: prefecthq/prefect:2.7.7-python3.11
+    image: prefecthq/prefect:2.8.0-python3.11
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -58,7 +58,7 @@ services:
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.7.7-python3.11
+    image: prefecthq/prefect:2.8.0-python3.11
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
