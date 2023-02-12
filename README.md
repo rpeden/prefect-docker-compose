@@ -30,20 +30,20 @@ The `docker-compose.yml` file contains five services:
 * `agent` - Prefect Orion Agent
 * `cli` - A container that mounts this repository's `flows` directory and offers an ideal environment for building and applying deployments and running flows. 
 
-## Prefect Orion
+## Prefect Server
 To run the Prefect Orion API and UI, open a terminal, navigate to the directory where you cloned this repository, and run:
 
 ```
-docker-compose --profile orion up
+docker-compose --profile server up
 ```
 
-This will start PostgreSQL and Prefect Orion. When Orion is ready, you will see a line that looks like:
+This will start PostgreSQL and Prefect Server. When the serveris ready, you will see a line that looks like:
 
 ```
-orion_1     | INFO:     Uvicorn running on http://0.0.0.0:4200 (Press CTRL+C to quit)
+server_1     | INFO:     Uvicorn running on http://0.0.0.0:4200 (Press CTRL+C to quit)
 ```
 
-The Orion API container shares port 4200 with the host machine, so if you open a web browser and navigate to `http://localhost:4200` you will see the Prefect Orion UI.
+The Prefect Server container shares port 4200 with the host machine, so if you open a web browser and navigate to `http://localhost:4200` you will see the Prefect Orion UI.
 
 ## Prefect CLI
 
@@ -102,7 +102,7 @@ After the MinIO container starts, you can load the MinIO UI in your web browser 
 
 Create a bucket named `prefect-flows` to store your Prefect flows, and then click **Identity->Service Accounts** to create a service account. This will give you an access key and a secret you can enter in a Prefect block to let the Prefect CLI and agents write to and read from your MinIO storage bucket.
 
-After you create a MinIO service account, open the Prefect Orion UI at `http://localhost:4200`. Click **Blocks**, then add a **Remote File System** block. Give the block any name you'd like, but remember what name you choose because you will need it when creating a deployment. 
+After you create a MinIO service account, open the Prefect UI at `http://localhost:4200`. Click **Blocks**, then add a **Remote File System** block. Give the block any name you'd like, but remember what name you choose because you will need it when creating a deployment. 
 
 In the *Basepath* field, enter `s3://prefect-flows`.
 
@@ -133,10 +133,10 @@ Now, if you open `http://localhost:9001/buckets/prefect-flows/browse` in a web b
 
 ## Next Steps
 
-You can run as many profiles as once as you'd like. For example, if you have created a deployment and want to start and agent for it, but don't want to open two separate terminals to run Orion and an agent *and* MinIO you can start them all at once by running: 
+You can run as many profiles as once as you'd like. For example, if you have created a deployment and want to start and agent for it, but don't want to open two separate terminals to run Prefect Server, an agent, *and* MinIO you can start them all at once by running: 
 
 ```
-docker compose --profile orion --profile minio --profile agent up
+docker compose --profile server --profile minio --profile agent up
 ```
 
 And if you want to start two separate agents that pull from different work queues? No problem! Just duplicate the agent service, give it a different name, and set its work queue name. For example:
@@ -147,7 +147,7 @@ agent_two:
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_OTHER_WORK_QUEUE_NAME"]
     environment:
-      - PREFECT_API_URL=http://orion:4200/api
+      - PREFECT_API_URL=http://server:4200/api
     profiles: ["agent"]
 ```
-Now, when you run `docker-compose --profile agent up`, both agents will start, connect to the Orion API, and begin polling their work queues.
+Now, when you run `docker-compose --profile agent up`, both agents will start, connect to the Prefect Server API, and begin polling their work queues.
