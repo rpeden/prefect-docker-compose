@@ -8,12 +8,12 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=orion
+      - POSTGRES_DB=prefect
     expose:
       - 5432
     volumes: 
       - db:/var/lib/postgresql/data
-    profiles: ["orion"]
+    profiles: ["server"]
   
   ### MinIO for flow storage
   minio:
@@ -26,8 +26,8 @@ services:
       - 9001:9001
     profiles: ["minio"]
 
-  ### Prefect Orion API
-  orion:
+  ### Prefect Server API and UI
+  server:
     image: prefecthq/prefect:2.8.0-python3.11
     restart: always
     volumes:
@@ -35,15 +35,15 @@ services:
     entrypoint: ["prefect", "orion", "start"]
     environment:
       # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
-      # PREFECT_API_URL to match the external hostname/IP used to load the Orion UI in your web browser.
-      - PREFECT_API_URL=http://orion:4200/api
+      # PREFECT_API_URL to match the external hostname/IP used to load the  UI in your web browser.
+      - PREFECT_API_URL=http://server:4200/api
       - PREFECT_ORION_API_HOST=0.0.0.0
-      - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/orion
+      - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/prefect
     ports:
       - 4200:4200
     depends_on:
       - database
-    profiles: ["orion"]
+    profiles: ["server"]
 
   ## Prefect Agent
   agent:
@@ -51,7 +51,7 @@ services:
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
-      - PREFECT_API_URL=http://orion:4200/api
+      - PREFECT_API_URL=http://server:4200/api
 #       Use PREFECT_API_KEY if connecting the agent to Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["agent"]
@@ -64,7 +64,7 @@ services:
     volumes:
       - "./flows:/root/flows"
     environment:
-      - PREFECT_API_URL=http://orion:4200/api
+      - PREFECT_API_URL=http://server:4200/api
 #       Use PREFECT_API_KEY to use the CLI to interact with Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
     profiles: ["cli"]
