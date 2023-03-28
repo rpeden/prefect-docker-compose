@@ -28,7 +28,7 @@ services:
 
   ### Prefect Server API and UI
   server:
-    image: prefecthq/prefect:2.8.0-python3.11
+    image: prefecthq/prefect:2.8.7-python3.11
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -37,8 +37,8 @@ services:
       # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
       # PREFECT_UI_URL to match the external hostname/IP used to load the  UI in your web browser.
       - PREFECT_UI_URL=http://127.0.0.0:4200/api
-      - PREFECT_ORION_API_HOST=0.0.0.0
-      - PREFECT_ORION_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/prefect
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+      - PREFECT_API_DATABASE_CONNECTION_URL=postgresql+asyncpg://postgres:postgres@database:5432/prefect
     ports:
       - 4200:4200
     depends_on:
@@ -47,7 +47,7 @@ services:
 
   ## Prefect Agent
   agent:
-    image: prefecthq/prefect:2.8.0-python3.11
+    image: prefecthq/prefect:2.8.7-python3.11
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -58,7 +58,7 @@ services:
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.8.0-python3.11
+    image: prefecthq/prefect:2.8.7-python3.11
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
