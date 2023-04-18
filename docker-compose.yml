@@ -28,11 +28,11 @@ services:
 
   ### Prefect Server API and UI
   server:
-    image: prefecthq/prefect:2.8.7-python3.11
+    image: prefecthq/prefect:2.10.4-python3.11
     restart: always
     volumes:
       - prefect:/root/.prefect
-    entrypoint: ["prefect", "orion", "start"]
+    entrypoint: ["prefect", "server", "start"]
     environment:
       # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
       # PREFECT_UI_URL to match the external hostname/IP used to load the  UI in your web browser.
@@ -47,7 +47,7 @@ services:
 
   ## Prefect Agent
   agent:
-    image: prefecthq/prefect:2.8.7-python3.11
+    image: prefecthq/prefect:2.10.4-python3.11
     restart: always
     entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
@@ -58,7 +58,7 @@ services:
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.8.7-python3.11
+    image: prefecthq/prefect:2.10.4-python3.11
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
