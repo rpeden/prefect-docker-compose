@@ -32,7 +32,7 @@ services:
     restart: always
     volumes:
       - prefect:/root/.prefect
-    entrypoint: ["prefect", "server", "start"]
+    entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "server", "start"]
     environment:
       # If you want to access Prefect Server from anywhere other than the Docker host machine, you will need to change
       # PREFECT_UI_URL to match the external hostname/IP used to load the  UI in your web browser.
