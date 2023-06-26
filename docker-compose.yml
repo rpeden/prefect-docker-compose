@@ -28,7 +28,7 @@ services:
 
   ### Prefect Server API and UI
   server:
-    image: prefecthq/prefect:2.10.13-python3.11
+    image: prefecthq/prefect:2.10.17-python3.11
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -50,9 +50,9 @@ services:
 
   ## Prefect Agent
   agent:
-    image: prefecthq/prefect:2.10.13-python3.11
+    image: prefecthq/prefect:2.10.17-python3.11
     restart: always
-    entrypoint: ["prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
+    entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
     environment:
       - PREFECT_API_URL=http://server:4200/api
 #       Use PREFECT_API_KEY if connecting the agent to Prefect Cloud
@@ -61,7 +61,7 @@ services:
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.10.13-python3.11
+    image: prefecthq/prefect:2.10.17-python3.11
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
