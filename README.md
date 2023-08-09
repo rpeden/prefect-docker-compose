@@ -33,6 +33,12 @@ The `docker-compose.yml` file contains five services:
 ## Prefect Server
 To run Prefect Server, open a terminal, navigate to the directory where you cloned this repository, and run:
 
+If the prefect server has to be run in a Standalone Server run the following commands, to access the Prefect API
+
+```bash
+sed -i 'g 127.0.0.0 your_server_address  ' docker-compose.yml
+sed -i 'g 127.0.0.1 your_server_address  ' docker-compose.yml
+```
 ```
 docker-compose --profile server up
 ```
