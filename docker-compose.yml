@@ -1,9 +1,8 @@
 version: "3.9"
 services:
-
   ### Prefect Database
   database:
-    image: postgres:15.2-alpine
+    image: postgres:alpine
     restart: always
     environment:
       - POSTGRES_USER=postgres
@@ -28,7 +27,7 @@ services:
 
   ### Prefect Server API and UI
   server:
-    image: prefecthq/prefect:2.11.5-python3.11
+    image: prefecthq/prefect:3-python3.12
     restart: always
     volumes:
       - prefect:/root/.prefect
@@ -50,20 +49,20 @@ services:
       - database
     profiles: ["server"]
 
-  ## Prefect Agent
-  agent:
-    image: prefecthq/prefect:2.11.5-python3.11
+  ## Prefect Worker
+  worker:
+    image: prefecthq/prefect:3-python3.12
     restart: always
-    entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "agent", "start", "-q", "YOUR_WORK_QUEUE_NAME"]
+    entrypoint: ["/opt/prefect/entrypoint.sh", "prefect", "worker", "start", "-p", "YOUR_WORK_QUEUE_NAME"]
     environment:
       - PREFECT_API_URL=http://server:4200/api
-#       Use PREFECT_API_KEY if connecting the agent to Prefect Cloud
+#       Use PREFECT_API_KEY if connecting the worker to Prefect Cloud
 #     - PREFECT_API_KEY=YOUR_API_KEY
-    profiles: ["agent"]
+    profiles: ["worker"]
 
   ### Prefect CLI
   cli:
-    image: prefecthq/prefect:2.11.5-python3.11
+    image: prefecthq/prefect:3-python3.12
     entrypoint: "bash"
     working_dir: "/root/flows"
     volumes:
